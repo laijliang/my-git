@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宠物养成待办助手</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 初始欢迎界面 -->
+    <div id="welcome-screen" class="welcome-screen">
+        <div class="welcome-content">
+            <div class="welcome-icon">🐾</div>
+            <h1>欢迎使用宠物养成待办助手</h1>
+            <p class="welcome-subtitle">让待办事项变得有趣，与宠物一起成长！</p>
+            
+            <div class="welcome-features">
+                <div class="feature-item">
+                    <span class="feature-icon">📝</span>
+                    <span>管理待办事项</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🎁</span>
+                    <span>完成任务获积分</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🐾</span>
+                    <span>养成可爱宠物</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🤖</span>
+                    <span>AI智能分析</span>
+                </div>
+            </div>
+            
+            <button id="start-btn" class="start-btn">开始使用</button>
+        </div>
+    </div>
+
+    <div class="container" id="main-container" style="display: none;">
+        <!-- 头部区域 -->
+        <header class="header">
+            <h1>宠物养成待办助手</h1>
+            <div class="header-actions">
+                <div class="pet-selector">
+                    <label for="pet-select">选择宠物:</label>
+                    <select id="pet-select">
+                        <option value="1">宠物1</option>
+                        <option value="2">宠物2</option>
+                    </select>
+                </div>
+                <div class="score-section">
+                    <div class="score-display">
+                        <span class="score-label">积分:</span>
+                        <span id="score-value">0</span>
+                    </div>
+                </div>
+                <button id="ai-analysis">🤖 AI分析</button>
+            </div>
+        </header>
+
+        <!-- 主内容区域 -->
+        <main class="main-content">
+            <!-- 待办事项管理区域 -->
+            <section class="todo-section">
+                <h2>📋 待办事项</h2>
+                <div class="todo-form">
+                    <input type="text" id="todo-input" placeholder="输入任务内容...">
+                    <select id="todo-priority">
+                        <option value="1">优先级: 低</option>
+                        <option value="2" selected>优先级: 中</option>
+                        <option value="3">优先级: 高</option>
+                    </select>
+                    <input type="date" id="todo-deadline" title="截止日期">
+                    <select id="todo-points">
+                        <option value="1">1分</option>
+                        <option value="2">2分</option>
+                        <option value="3" selected>3分</option>
+                        <option value="5">5分</option>
+                        <option value="10">10分</option>
+                    </select>
+                    <button id="add-todo">➕ 添加任务</button>
+                </div>
+                <div class="todo-filters">
+                    <button class="filter-btn active" data-filter="all">全部</button>
+                    <button class="filter-btn" data-filter="pending">待完成</button>
+                    <button class="filter-btn" data-filter="completed">已完成</button>
+                </div>
+                <ul id="todo-list"></ul>
+            </section>
+
+            <!-- 宠物养成区域 -->
+            <section class="pet-section">
+                <h2>🐾 我的宠物</h2>
+                <div class="pet-container">
+                    <div id="pet-display"></div>
+                    <div class="pet-info">
+                        <div class="pet-name" id="pet-name">宠物1号</div>
+                        <div class="pet-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">❤️ 亲密度:</span>
+                                <span id="intimacy-value">0</span>
+                                <div class="intimacy-bar">
+                                    <div id="intimacy-progress"></div>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">⭐ 等级:</span>
+                                <span id="level-value">1</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pet-actions">
+                        <button id="feed-pet" data-cost="5">🍖 喂食 (5积分)</button>
+                        <button id="play-pet" data-cost="3">🎾 玩耍 (3积分)</button>
+                        <button id="groom-pet" data-cost="2">🧹 梳理 (2积分)</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- 底部区域 -->
+        <footer class="footer">
+            <p>© 2026 宠物养成待办助手 | 与宠物一起成长每一天 🌟</p>
+        </footer>
+    </div>
+
+    <!-- 动画效果容器 -->
+    <div id="animation-container"></div>
+
+    <!-- AI分析对话框 -->
+    <div id="ai-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>🤖 AI智能待办分析</h3>
+            <div class="ai-input">
+                <textarea id="ai-prompt" placeholder="请输入您想要分析的待办事项内容，AI将为您分析优先级并提供合理的安排建议..."></textarea>
+                <button id="ai-submit" class="ai-submit-btn">🔍 开始分析</button>
+            </div>
+            <div id="ai-result" class="ai-result"></div>
+            <div id="ai-confirm" class="ai-confirm" style="display: none;">
+                <p class="confirm-question">是否将分析结果添加到待办事项列表？</p>
+                <div class="confirm-buttons">
+                    <button id="ai-confirm-yes" class="confirm-btn yes">✅ 是</button>
+                    <button id="ai-confirm-no" class="confirm-btn no">❌ 否</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
